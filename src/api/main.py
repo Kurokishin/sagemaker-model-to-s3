@@ -11,6 +11,10 @@ def predict():
     try:
         if request.method == "GET":
             return 'Em desenvolvimento'
+        elif request.method == "POST":
+            jsonData = request.get_json()
+            # fazer algo com o jsonData
+            return jsonify(result="Predição feita")
     except Exception as e:
         return jsonify(error=str(e))
 
