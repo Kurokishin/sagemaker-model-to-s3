@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -8,8 +8,11 @@ def index():
 
 @app.route('/api/v1/predict', methods=["GET", "POST"])
 def predict():
-    if request.method == "GET":
-        return 'Em desenvolvimento'
+    try:
+        if request.method == "GET":
+            return 'Em desenvolvimento'
+    except Exception as e:
+        return jsonify(error=str(e))
 
 if __name__ == "__main__":
     app.run(debug=True)
