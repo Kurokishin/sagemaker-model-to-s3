@@ -2,10 +2,10 @@ FROM python:3.10
 
 WORKDIR /app
 
-COPY . .
+COPY . /app
 
-RUN pip install -r requirements.txt
+RUN pip install flask
 
 EXPOSE 5000
 
-CMD ["python", "./main.py"]
+CMD ["python", "main.py"]
