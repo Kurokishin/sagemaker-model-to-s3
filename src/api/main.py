@@ -4,17 +4,27 @@ import json
 import boto3
 import pickle
 import os
+import sagemaker
 
 app = Flask(__name__)
 
+# Recebe as acess_keys da AWS do usuário
+with open("credentials.json", "r") as file:
+    keys = json.load(file)
+
 # Inicializa o cliente
-s3 = boto3.client('s3')
+s3 = boto3.client('s3',
+                   aws_access_key_id= keys["aws_access_key_id"],
+                   aws_secret_access_key= keys["aws_secret_access_key"],
+                   region_name="us-east-1")
+
+#sm_session = sagemaker.Session(boto_session=s3)
 
 # Atributo 'Body' do objeto retornado acessa os dados do arquivo
-model_file = s3.get_object(Bucket='bucket_name', Key = 'path/to/model.pkl')['Body']
+model_file = s3.get_object(Bucket='modelo-treinado-grupo4', Key = 'modelos/xgboost/output/xgboost-2023-01-27-14-30-50-270/output/model.tar.gz')['Body']
 
 # Carrega o modelo para a aplicação
-loaded_model = pickle.load(open(model_file, 'rb'))
+# loaded_model = pickle.load(open(model_file, 'rb'))
 
 @app.route('/')
 def index():
