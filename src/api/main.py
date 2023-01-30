@@ -22,11 +22,10 @@ def index():
 # Definindo parâmetros de retorno e tratamento de erro
 def predict():
     try:
-            json_data = request.get_json()
             #predicao = model_file.predict(np.array([list(json_data.values())]))
             #resultado = predicao[0]
-
-            resposta = {"result": int(predicao())}
+            predict = predicao()
+            resposta = {"result": int(predict)}
            
             return jsonify(resposta)
 
