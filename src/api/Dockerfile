@@ -10,6 +10,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-EXPOSE 5000
+EXPOSE 80
 
-CMD ["python", "main.py"]
+ENV FLASK_APP=main.py
+
+CMD ["flask", "run", "--host=0.0.0.0"]

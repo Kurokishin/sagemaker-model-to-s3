@@ -1,6 +1,4 @@
-import numpy as np
-from flask import Flask, request, jsonify
-import pickle
+from flask import Flask, jsonify
 import os
 from endpoint import predicao
 
@@ -9,10 +7,6 @@ app = Flask(__name__)
 
 # Atributo 'Body' do objeto retornado acessa os dados do arquivo
 #model_file = s3.get_object(Bucket='modelo-treinado-grupo4', Key = 'modelos/xgboost/output/xgboost-2023-01-27-14-30-50-270/output/model.tar.gz')['Body']
-
-# Carrega o modelo para a aplicação
-# loaded_model = pickle.load(open(model_file, 'rb'))
-
 @app.route('/')
 def index():
     return 'App do Grupo 4!', 200
@@ -22,8 +16,6 @@ def index():
 # Definindo parâmetros de retorno e tratamento de erro
 def predict():
     try:
-            #predicao = model_file.predict(np.array([list(json_data.values())]))
-            #resultado = predicao[0]
             predict = predicao()
             resposta = {"result": int(predict)}
            

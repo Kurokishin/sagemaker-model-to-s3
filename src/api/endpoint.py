@@ -1,33 +1,24 @@
+
 import json
-import boto3
 import numpy as np
-import sagemaker
-from sagemaker.serializers import CSVSerializer
+import tensorflow as tf
+from tensorflow import keras
+from downloads3 import downloads3
 
 def predicao():
+
+    downloads3()
+    
     # Recebe o json com os dados a serem enviados para a predição 
-    predict_data = json.load(open('inputs.json'))
+    input_data = json.load(open('input.json'))
 
-    # Recebe as acess_keys da AWS do usuário
-    with open("credentials.json", "r") as file:
-        keys = json.load(file)
+    model = tf.keras.models.load_model('model.h5')
 
-    # Inicializa a integração com o AWS SageMaker
-    boto_session = boto3.Session(
-                    aws_access_key_id= keys["aws_access_key_id"],
-                    aws_secret_access_key= keys["aws_secret_access_key"],
-                    region_name="us-east-1")
+    # Previsão
+    previsao = model.predict(np.array([list(input_data.values())]))
+    
+    previsao = list(previsao[0]).index(max(previsao[0]))
 
-    sm_session = sagemaker.Session(boto_session=boto_session)
+    return previsao + 1
 
-    # Busca o endpoint na AWS para acionar a predição
-    previsor = sagemaker.predictor.Predictor(endpoint_name='xgboost-2023-01-30-14-46-03-245', sagemaker_session=sm_session)
-    previsor.serializer = CSVSerializer()
 
-    # Array de teste, substituir pelo JSON convertido solicitado na avaliação
-    arrayteste = np.array([list(predict_data.values())])
-
-    # Predição propriamente dita
-    previsao = float(previsor.predict(arrayteste).decode('utf-8'))
-
-    return previsao
