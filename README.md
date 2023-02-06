@@ -129,9 +129,13 @@ Após as definições de criação do modelo ocorre o treinamento em si
 sequential = model.fit(X_treino, y_treino, epochs=50, batch_size=256, validation_data=(X_teste, y_teste))
 ```
 > **X_treino** e **y_treino** são variáveis de treinamento e alvo, respectivamente.
+
 > **epochs** são a quantidade de iterações nos dados de treinamento.
+
 > **batch_size** refere-se a quantidade de amostras em uma iteração, ou seja, a atualização dos pesos. Quanto menor o tamanho do lote o modelo possuirá maior acurácia, mas o treinamento será mais lento, enquanto que com uma quantidade maior o treinamento será menos acertivo, contudo mais rápido.
-> **validation_data** contém os dados de validação e os alvos. Assim o modelo é monitorado durante seu treinamento para evitar o *overfitting*
+
+> **validation_data** contém os dados de validação e os alvos. Assim o modelo é monitorado durante seu treinamento para evitar o *overfitting*.
+
 > O método **model.fit** traz as informações sobre todo o processo de treino.
 
 A acurácia obtida no fim do processo foi de aproximadamente 64%.
