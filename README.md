@@ -9,6 +9,7 @@ Avaliação da quinta sprint do programa de bolsas Compass UOL para formação e
 ## Sumário
 * [Objetivo](#objetivo)
 * [Ferramentas](#ferramentas)
+* [Executar a aplicação localmente](#executar-localmente-a-aplicação)
 * [Desenvolvimento](#desenvolvimento)
     * [Tratamento do dataframe](#tratamento-do-dataframe)
     * [Concepção do modelo](#concepção-do-modelo)
@@ -32,6 +33,15 @@ Utilizar o dataset [Hotel Reservations](https://www.kaggle.com/datasets/ahsan81/
     * [SageMaker](https://aws.amazon.com/sagemaker/) plataforma que fornece ferramentas para construção, treinamento e *deploy* de modelos de aprendizado de máquina.
     * [S3](https://aws.amazon.com/s3/) serviço de armazenamento.
 * [Docker](https://www.docker.com/) plataforma de virtualização de software em contêineres.
+
+---
+
+## Executar localmente a aplicação
+No mesmo diretório onde está os arquivos docker execute:
+
+```
+docker compose up
+```
 
 ---
 
