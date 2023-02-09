@@ -1,9 +1,9 @@
 import json
 import boto3
 
-def downloads3():
+def downloads():
     # Recebe as acess_keys da AWS do usuário
-    with open("credentials.json", "r") as file:
+    with open("src/api/credentials.json", "r") as file:
         keys = json.load(file)
 
     # Baixa o modelo do s3

@@ -10,7 +10,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-EXPOSE 80
+EXPOSE 8080
 
 ENV FLASK_APP=main.py
 

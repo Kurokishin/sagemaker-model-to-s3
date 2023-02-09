@@ -1,16 +1,15 @@
-
 import json
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-from downloads3 import downloads3
+from downloads import downloads
 
 def predicao():
 
-    downloads3()
+    downloads()
     
     # Recebe o json com os dados a serem enviados para a predição 
-    input_data = json.load(open('input.json'))
+    input_data = json.load(open('src/api/input.json'))
 
     model = tf.keras.models.load_model('model.h5')
 
@@ -20,5 +19,3 @@ def predicao():
     previsao = list(previsao[0]).index(max(previsao[0]))
 
     return previsao + 1
-
-
