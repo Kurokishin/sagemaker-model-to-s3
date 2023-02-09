@@ -15,6 +15,7 @@ Avaliação da quinta sprint do programa de bolsas Compass UOL para formação e
     * [Concepção do modelo](#concepção-do-modelo)
     * [API](#api)
     * [Build da aplicação](#build-da-aplicação)
+    * [Elastic Beanstalk](#deploy-no-elastic-beanstalk)
 * [Dificuldades](#dificuldades)
 * [Autores](#autores)
 
@@ -164,7 +165,7 @@ with open('model.h5', 'rb') as file:
 
 Conforme requisitado na avaliação, uma API foi criada utilizando o framework [Flask](https://flask.palletsprojects.com/en/2.2.x/) para expor um *endpoint* que mostra o resultado da inferência do modelo diante dos dados do arquivo de [input](https://github.com/Compass-pb-aws-2022-IFCE/sprint-5-pb-aws-ifce/blob/Grupo-4/src/api/input.json).
 
-No [main](https://github.com/Compass-pb-aws-2022-IFCE/sprint-5-pb-aws-ifce/blob/Grupo-4/src/api/main.py) um servidor foi criado ouvindo a porta 5000 e a rota **/api/v1/predict** escolhida para mostrar o resultado.
+No [main](https://github.com/Compass-pb-aws-2022-IFCE/sprint-5-pb-aws-ifce/blob/Grupo-4/src/api/main.py) um servidor foi criado ouvindo a porta 8080 e a rota **/api/v1/predict** escolhida para mostrar o resultado.
 
 ```py
 app = Flask(__name__)
@@ -183,7 +184,7 @@ def predict():
         return jsonify(error=str(e))
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 8080))
     app.run(debug=True)
 ```
 A autorização de acesso ao bucket é feito por chaves secretas do criador do mesmo. Esse processo pode ser visto em [downloads](https://github.com/Compass-pb-aws-2022-IFCE/sprint-5-pb-aws-ifce/blob/Grupo-4/src/api/downloads3.py).
@@ -230,30 +231,32 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . /app
-EXPOSE 5000
+EXPOSE 8080
 ENV FLASK_APP=main.py
 CMD ["flask", "run", "--host=0.0.0.0"]
 ```
 
-O [docker compose](https://github.com/Compass-pb-aws-2022-IFCE/sprint-5-pb-aws-ifce/blob/Grupo-4/src/api/docker-compose.yml) realiza a criação do contêiner baseado na imagem provida.
+### Deploy no Elastic Beanstalk
 
-```Dockerfile
-version: '3'
-services:
-   web:
-      container_name: server-api-flask
-      hostname: server-api-flask
-      build: .
-      ports:
-         - "5000:5000"
-      volumes:
-         - .:/code
-```
+Segue o lançamento da aplicação de maneira online na plataforma da AWS:
+
+1. Crie a aplicação.
+![criando aplicação](https://user-images.githubusercontent.com/80788425/217838482-794e5902-1600-4fbf-a20a-31f52e774d45.png)
+
+2. Configure a plataforma e comprima os arquivos referentes a API e o modelo.
+![configurando a aplicação](https://user-images.githubusercontent.com/80788425/217839256-68fe2ccd-6764-4490-85b6-5456158e8daf.png)
+
+3. Após alguns minutos de configurações que a plataforma da AWS faz o resultado é o seguinte:
+
+![resultado](https://user-images.githubusercontent.com/80788425/217840308-318a7541-66c4-474a-b7c4-ebee624ccc77.jpeg)
+
+A aplicação está disponível [aqui](http://avsprint5-env.eba-widjye74.us-east-1.elasticbeanstalk.com/).
+
 ---
 
 ## Dificuldades
 
-* Acesso ao bucket por parte dos outros membros da equipe.
+* Acesso ao bucket por parte dos membros da equipe.
 * Deploy da aplicação no Elastic Beanstalk.
 
 ---
