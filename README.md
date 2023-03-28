@@ -1,4 +1,3 @@
-# Sprint 5
 # Avaliação Sprint 5 - Programa de Bolsas Compass UOL / AWS e IFCE
 
 [![N|Solid](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/LogoCompasso-positivo.png/440px-LogoCompasso-positivo.png)](https://compass.uol/pt/home/)
